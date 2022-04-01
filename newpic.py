@@ -1,6 +1,7 @@
 
 from cProfile import label
 from email.mime import image
+import tkinter
 
 from tkinter.messagebox import showinfo
 from breezypythongui import EasyFrame
@@ -39,18 +40,19 @@ class ChooseButton(EasyFrame):
 
     def chooseFile(self):
         '''Opens files chooser and opens it in a new window, separate from application'''
-        fileList = [("GIF Files","*.gif")]
+        fileList = [("GIF Files","*.gif"),("PNG Files","*.png")]
         filename = fd.askopenfilename(title= "Add a picture file", initialdir= "/",filetypes= fileList)
         #showinfo(title= "Image Selected", message= filename)
         
-        Og = Tk()
-        Og.title("Original Image")
-        img = PhotoImage(file= filename)
-        label = Label(image = img)
-        label.image = img
-        label.pack()
-        
-        Og.mainloop()
+        Origin = Tk()
+        Origin.title("Original Image")
+        img =PhotoImage(file= filename)
+
+        canvas= tkinter.Canvas(Origin)
+        canvas.pack()
+        canvas.create_image((0,0), image=img)
+
+        Origin.mainloop()
 
 
     def close(self):
